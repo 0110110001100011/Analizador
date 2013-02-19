@@ -19,6 +19,8 @@ public class Automata extends Ventana{
 					estado=4;
 				else if(compara>='0' && compara<='9')
 					estado=5;
+				else if(compara=='(' || compara==')')
+					estado=8;
 				else
 					estado=99;
 				break;
@@ -70,6 +72,9 @@ public class Automata extends Ventana{
 					estado=7;
 				else
 					estado=99;
+				break;
+			case 8:
+				estado=99;
 				break;
 			case 99:
 					i=cadena.length();

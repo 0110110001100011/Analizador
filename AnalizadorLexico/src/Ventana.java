@@ -94,6 +94,9 @@ public class Ventana extends JFrame {
 				case 7:
 					textField_1.setText("Real");
 					break;
+				case 8:
+					textField_1.setText("Parentesis");
+					break;
 				default:
 					textField_1.setText("ERROR");
 				}
