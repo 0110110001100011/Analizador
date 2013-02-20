@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.StringTokenizer;
-import javax.swing.JTextPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import java.awt.SystemColor;
 
 
 @SuppressWarnings("serial")
@@ -48,6 +50,7 @@ public class Ventana extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
+		panel.setForeground(SystemColor.textHighlight);
 		contentPane.add(panel, BorderLayout.CENTER);
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
@@ -60,21 +63,17 @@ public class Ventana extends JFrame {
 		textField = new JTextField();
 		sl_panel.putConstraint(SpringLayout.NORTH, textField, 62, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, textField, 25, SpringLayout.EAST, lblIngresaCadena);
-		sl_panel.putConstraint(SpringLayout.EAST, textField, 271, SpringLayout.EAST, lblIngresaCadena);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 
-		final JTextPane textPane = new JTextPane();
-		sl_panel.putConstraint(SpringLayout.NORTH, textPane, 38, SpringLayout.SOUTH, textField);
-		sl_panel.putConstraint(SpringLayout.SOUTH, textPane, -10, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, textPane, 0, SpringLayout.EAST, textField);
-		textPane.setEditable(false);
+		final JTextArea textArea = new JTextArea();
+		textArea.setBackground(SystemColor.menu);
+		textArea.setEditable(false);
 		
 		JButton btnNewButton = new JButton("Enviar");
-		sl_panel.putConstraint(SpringLayout.WEST, textPane, 6, SpringLayout.EAST, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 37, SpringLayout.SOUTH, textField);
-		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, textField);
+		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton, 110, SpringLayout.WEST, panel);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cadena = new String (textField.getText());
@@ -116,11 +115,27 @@ public class Ventana extends JFrame {
 					default:
 						cadenaSalida+=("ERROR\n");
 					}
-					textPane.setText(cadenaSalida);
+					textArea.setText(cadenaSalida);
 				}
 			}
 		});
 		panel.add(btnNewButton);
-		panel.add(textPane);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setForeground(SystemColor.textHighlight);
+		sl_panel.putConstraint(SpringLayout.EAST, textField, 0, SpringLayout.EAST, scrollPane);
+		sl_panel.putConstraint(SpringLayout.NORTH, scrollPane, -2, SpringLayout.NORTH, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.WEST, scrollPane, 6, SpringLayout.EAST, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.SOUTH, scrollPane, -10, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, scrollPane, 184, SpringLayout.EAST, btnNewButton);
+		panel.add(scrollPane);
+		
+
+		scrollPane.setViewportView(textArea);
+		sl_panel.putConstraint(SpringLayout.NORTH, textArea, -1, SpringLayout.NORTH, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.WEST, textArea, 6, SpringLayout.EAST, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.SOUTH, textArea, 123, SpringLayout.NORTH, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.EAST, textArea, 0, SpringLayout.EAST, textField);
+
 	}
 }
