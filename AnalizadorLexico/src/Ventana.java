@@ -13,6 +13,8 @@ import java.util.StringTokenizer;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.SystemColor;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 
 @SuppressWarnings("serial")
@@ -55,25 +57,28 @@ public class Ventana extends JFrame {
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
 		
-		JLabel lblIngresaCadena = new JLabel("Ingresa cadena");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblIngresaCadena, 62, SpringLayout.NORTH, panel);
+		JLabel lblIngresaCadena = new JLabel("Ingresa cadena: ");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblIngresaCadena, 10, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, lblIngresaCadena, 10, SpringLayout.WEST, panel);
 		panel.add(lblIngresaCadena);
 		
 		textField = new JTextField();
-		sl_panel.putConstraint(SpringLayout.NORTH, textField, 62, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, textField, 25, SpringLayout.EAST, lblIngresaCadena);
+		sl_panel.putConstraint(SpringLayout.WEST, textField, 6, SpringLayout.EAST, lblIngresaCadena);
+		sl_panel.putConstraint(SpringLayout.EAST, textField, -39, SpringLayout.EAST, panel);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 
 		final JTextArea textArea = new JTextArea();
+		textArea.setForeground(Color.WHITE);
 		textArea.setBackground(SystemColor.menu);
 		textArea.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Enviar");
-		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 37, SpringLayout.SOUTH, textField);
-		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton, 110, SpringLayout.WEST, panel);
+		JButton btnNewButton = new JButton("Analizar");
+		btnNewButton.setToolTipText("Analiza la cadena ingresada");
+		sl_panel.putConstraint(SpringLayout.SOUTH, textField, -6, SpringLayout.NORTH, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 36, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton, -10, SpringLayout.EAST, panel);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cadena = new String (textField.getText());
@@ -81,61 +86,56 @@ public class Ventana extends JFrame {
 				String cadenaSalida = new String();
 				StringTokenizer tokens = new StringTokenizer(cadena);
 				while(tokens.hasMoreTokens()){
-					System.out.println(cadenatkn);
+					//System.out.println(cadenatkn);
 					cadenatkn=tokens.nextToken();
 					int envio=0;
 					Automata analiza = new Automata();
 					envio=analiza.analiza(cadenatkn);
-					
-					switch(envio){
-					case 0:
-						cadenaSalida+=("estado 0\n");
-						break;
-					case 1:
-						cadenaSalida+=("Cadena, Identificador\n");
-						break;
-					case 2:
-						cadenaSalida+=("Identificador\n");
-						break;
-					case 3:
-						cadenaSalida+=("Operador Adicion\n");
-						break;
-					case 4:
-						cadenaSalida+=("Operador Multiplicacion\n");
-						break;
-					case 5:
-						cadenaSalida+=("Entero\n");
-						break;
-					case 7:
-						cadenaSalida+=("Real\n");
-						break;
-					case 8:
-						cadenaSalida+=("Parentesis\n");
-						break;
-					default:
-						cadenaSalida+=("ERROR\n");
-					}
+					cadenaSalida+=(cadenatkn+" = ");
+					cadenaSalida=AnalizadorLexico.muestra(envio, cadenaSalida);
 					textArea.setText(cadenaSalida);
 				}
+				
+
+				textArea.setBackground(SystemColor.black);
 			}
 		});
 		panel.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setForeground(SystemColor.textHighlight);
-		sl_panel.putConstraint(SpringLayout.EAST, textField, 0, SpringLayout.EAST, scrollPane);
-		sl_panel.putConstraint(SpringLayout.NORTH, scrollPane, -2, SpringLayout.NORTH, btnNewButton);
-		sl_panel.putConstraint(SpringLayout.WEST, scrollPane, 6, SpringLayout.EAST, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.NORTH, scrollPane, 6, SpringLayout.SOUTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.SOUTH, scrollPane, -10, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, scrollPane, 184, SpringLayout.EAST, btnNewButton);
+		sl_panel.putConstraint(SpringLayout.EAST, scrollPane, -10, SpringLayout.EAST, panel);
+		scrollPane.setForeground(SystemColor.textHighlight);
 		panel.add(scrollPane);
 		
-
 		scrollPane.setViewportView(textArea);
 		sl_panel.putConstraint(SpringLayout.NORTH, textArea, -1, SpringLayout.NORTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.WEST, textArea, 6, SpringLayout.EAST, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.SOUTH, textArea, 123, SpringLayout.NORTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.EAST, textArea, 0, SpringLayout.EAST, textField);
+		
+		JLabel lblSalida = new JLabel("Salida: ");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblSalida, 41, SpringLayout.SOUTH, lblIngresaCadena);
+		sl_panel.putConstraint(SpringLayout.WEST, scrollPane, 6, SpringLayout.EAST, lblSalida);
+		sl_panel.putConstraint(SpringLayout.WEST, lblSalida, 0, SpringLayout.WEST, lblIngresaCadena);
+		panel.add(lblSalida);
+		
+		JButton btnX = new JButton("");
+		sl_panel.putConstraint(SpringLayout.WEST, btnX, 5, SpringLayout.EAST, textField);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnX, 0, SpringLayout.SOUTH, lblIngresaCadena);
+		sl_panel.putConstraint(SpringLayout.EAST, btnX, -10, SpringLayout.EAST, panel);
+		btnX.setIcon(new ImageIcon(Ventana.class.getResource("/javax/swing/plaf/metal/icons/ocean/paletteClose.gif")));
+		btnX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textArea.setBackground(SystemColor.menu);
+				textArea.setText("");
+				textField.setText("");
+				
+			}
+		});
+		btnX.setToolTipText("Limpiar Entrada/Salida");
+		panel.add(btnX);
 
 	}
 }
