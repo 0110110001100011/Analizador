@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.StringTokenizer;
+import javax.swing.JTextPane;
 
 
 @SuppressWarnings("serial")
@@ -16,7 +18,6 @@ public class Ventana extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -63,52 +64,63 @@ public class Ventana extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 		
+
+		final JTextPane textPane = new JTextPane();
+		sl_panel.putConstraint(SpringLayout.NORTH, textPane, 38, SpringLayout.SOUTH, textField);
+		sl_panel.putConstraint(SpringLayout.SOUTH, textPane, -10, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, textPane, 0, SpringLayout.EAST, textField);
+		textPane.setEditable(false);
+		
 		JButton btnNewButton = new JButton("Enviar");
+		sl_panel.putConstraint(SpringLayout.WEST, textPane, 6, SpringLayout.EAST, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 37, SpringLayout.SOUTH, textField);
 		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, textField);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cadena = new String (textField.getText());
-				int envio=0;
-				Automata analiza = new Automata();
-				envio=analiza.analiza(cadena);
-				switch(envio){
-				case 0:
-					textField_1.setText("estado 0");
-					break;
-				case 1:
-					textField_1.setText("Cadena, Identificador");
-					break;
-				case 2:
-					textField_1.setText("Identificador");
-					break;
-				case 3:
-					textField_1.setText("Operador Adicion");
-					break;
-				case 4:
-					textField_1.setText("Operador Multiplicacion");
-					break;
-				case 5:
-					textField_1.setText("Entero");
-					break;
-				case 7:
-					textField_1.setText("Real");
-					break;
-				case 8:
-					textField_1.setText("Parentesis");
-					break;
-				default:
-					textField_1.setText("ERROR");
+				String cadenatkn = new String();
+				String cadenaSalida = new String();
+				StringTokenizer tokens = new StringTokenizer(cadena);
+				while(tokens.hasMoreTokens()){
+					System.out.println(cadenatkn);
+					cadenatkn=tokens.nextToken();
+					int envio=0;
+					Automata analiza = new Automata();
+					envio=analiza.analiza(cadenatkn);
+					
+					switch(envio){
+					case 0:
+						cadenaSalida+=("estado 0\n");
+						break;
+					case 1:
+						cadenaSalida+=("Cadena, Identificador\n");
+						break;
+					case 2:
+						cadenaSalida+=("Identificador\n");
+						break;
+					case 3:
+						cadenaSalida+=("Operador Adicion\n");
+						break;
+					case 4:
+						cadenaSalida+=("Operador Multiplicacion\n");
+						break;
+					case 5:
+						cadenaSalida+=("Entero\n");
+						break;
+					case 7:
+						cadenaSalida+=("Real\n");
+						break;
+					case 8:
+						cadenaSalida+=("Parentesis\n");
+						break;
+					default:
+						cadenaSalida+=("ERROR\n");
+					}
+					textPane.setText(cadenaSalida);
 				}
 			}
 		});
 		panel.add(btnNewButton);
-		
-		textField_1 = new JTextField();
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_1, 38, SpringLayout.SOUTH, textField);
-		sl_panel.putConstraint(SpringLayout.WEST, textField_1, 6, SpringLayout.EAST, btnNewButton);
-		sl_panel.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, textField);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		panel.add(textPane);
 	}
 }
