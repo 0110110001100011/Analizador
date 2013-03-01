@@ -1,4 +1,3 @@
-
 @SuppressWarnings("serial")
 public class Automata extends Ventana{
 	//String token = new String();
@@ -182,6 +181,4 @@ public class Automata extends Ventana{
 		}
 		return estado;
 	}
-	
-
 }

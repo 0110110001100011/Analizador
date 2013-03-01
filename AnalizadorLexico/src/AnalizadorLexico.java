@@ -1,12 +1,7 @@
 import java.awt.EventQueue;
 import java.util.StringTokenizer;
 
-
 public class AnalizadorLexico {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -19,7 +14,6 @@ public class AnalizadorLexico {
 			}
 		});
 	}
-	
 	public static boolean esPalabraReservada(String palabra){
 		String reservada = new String("break case char const continue default do double " +
 				"else enum extern float for goto if int long register return short signed " +
@@ -35,7 +29,6 @@ public class AnalizadorLexico {
 		}
 		return false;
 	}
-	
 	public static String muestra(int envio, String cadenaSalida){
 		switch(envio){
 		case 0:
@@ -91,5 +84,4 @@ public class AnalizadorLexico {
 		}
 		return cadenaSalida;
 	}
-
 }

@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
 
 @SuppressWarnings("serial")
@@ -22,6 +23,12 @@ public class Ventana extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JLabel lblIngresaCadena;
+	private JScrollPane scrollPane;
+	private JLabel lblSalida;
+	private JButton btnX;
+	private JButton btnNewButton;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -51,13 +58,13 @@ public class Ventana extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setForeground(SystemColor.textHighlight);
 		contentPane.add(panel, BorderLayout.CENTER);
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
 		
-		JLabel lblIngresaCadena = new JLabel("Ingresa cadena: ");
+		lblIngresaCadena = new JLabel("Ingresa cadena: ");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblIngresaCadena, 10, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, lblIngresaCadena, 10, SpringLayout.WEST, panel);
 		panel.add(lblIngresaCadena);
@@ -71,10 +78,10 @@ public class Ventana extends JFrame {
 
 		final JTextArea textArea = new JTextArea();
 		textArea.setForeground(Color.WHITE);
-		textArea.setBackground(SystemColor.menu);
+		textArea.setBackground(UIManager.getColor("Button.background"));
 		textArea.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Analizar");
+		btnNewButton = new JButton("Analizar");
 		btnNewButton.setToolTipText("Analiza la cadena ingresada");
 		sl_panel.putConstraint(SpringLayout.SOUTH, textField, -6, SpringLayout.NORTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 36, SpringLayout.NORTH, panel);
@@ -102,7 +109,7 @@ public class Ventana extends JFrame {
 		});
 		panel.add(btnNewButton);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		sl_panel.putConstraint(SpringLayout.NORTH, scrollPane, 6, SpringLayout.SOUTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.SOUTH, scrollPane, -10, SpringLayout.SOUTH, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, scrollPane, -10, SpringLayout.EAST, panel);
@@ -115,13 +122,13 @@ public class Ventana extends JFrame {
 		sl_panel.putConstraint(SpringLayout.SOUTH, textArea, 123, SpringLayout.NORTH, btnNewButton);
 		sl_panel.putConstraint(SpringLayout.EAST, textArea, 0, SpringLayout.EAST, textField);
 		
-		JLabel lblSalida = new JLabel("Salida: ");
+		lblSalida = new JLabel("Salida: ");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblSalida, 41, SpringLayout.SOUTH, lblIngresaCadena);
 		sl_panel.putConstraint(SpringLayout.WEST, scrollPane, 6, SpringLayout.EAST, lblSalida);
 		sl_panel.putConstraint(SpringLayout.WEST, lblSalida, 0, SpringLayout.WEST, lblIngresaCadena);
 		panel.add(lblSalida);
 		
-		JButton btnX = new JButton("");
+		btnX = new JButton("");
 		sl_panel.putConstraint(SpringLayout.WEST, btnX, 5, SpringLayout.EAST, textField);
 		sl_panel.putConstraint(SpringLayout.SOUTH, btnX, 0, SpringLayout.SOUTH, lblIngresaCadena);
 		sl_panel.putConstraint(SpringLayout.EAST, btnX, -10, SpringLayout.EAST, panel);
